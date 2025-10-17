@@ -1,14 +1,15 @@
 {
-  "name": "hono-boilerplate",
+  "name": "og-image-ts",
   "version": "1.0.0",
-  "description": "hono boilerplate",
-  "main": "src/index.ts",
+  "description": "OG Image with TypeScript",
   "type": "module",
   "scripts": {
+    "dev": "DEBUG=true npx --yes  edge-functions@6.1.0 dev",
+    "build": "npx --yes edge-functions@6.1.0 build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "aziontech",
+  "author": "Bruno Andrade<bruno.andrade@azion.com>",
   "license": "ISC",
   "dependencies": {
     "@resvg/resvg-wasm": "^2.6.2",
