@@ -1,8 +1,7 @@
-import { svgTypes } from "@/og-svg";
 import { initWasm, Resvg } from "@resvg/resvg-wasm";
 import { Hono } from "hono";
+import satori from "satori";
 const app = new Hono();
-// import satori from "satori";
 
 let wasmIsInitialized = false;
 const wasmInitializer = async () => {
@@ -27,21 +26,21 @@ app.get("/", async (c) => {
     await wasmInitializer();
   }
 
-  const svg = svgTypes.default
-    .replace("{{title}}", title)
-    .replace("{{subtitle}}", subtitle);
+  const svg = await satori(<div style={{ color: "black" }}>hello, world</div>, {
+    width: 600,
+    height: 400,
+    fonts: [
+      {
+        name: "Sora",
+        // Use `fs` (Node.js only) or `fetch` to read the font as Buffer/ArrayBuffer and provide `data` here.
+        data: soraBuffer,
+        weight: 400,
+        style: "normal",
+      },
+    ],
+  });
 
-  const image = new Resvg(svg, {
-    fitTo: {
-      mode: "width",
-      value: 1200,
-    },
-    font: {
-      fontBuffers: [soraBuffer], // New in 2.5.0, loading custom fonts
-    },
-  })
-    .render()
-    .asPng();
+  const image = new Resvg(svg).render().asPng();
 
   // Convert to proper Uint8Array<ArrayBuffer> type
   const pngBuffer = new Uint8Array(image);
