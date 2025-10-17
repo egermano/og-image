@@ -27,9 +27,7 @@ app.get("/", async (c) => {
     await wasmInitializer();
   }
 
-  const svg = svgTypes.default
-    .replace("{{title}}", title)
-    .replace("{{subtitle}}", subtitle);
+  const svg = svgTypes.default(title, subtitle);
 
   const image = new Resvg(svg, {
     fitTo: {

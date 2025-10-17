@@ -1,5 +1,54 @@
+const splitTitle = (title: string): string[] => {
+  const maxCharsPerLine = 23;
+  const maxLines = 2;
+  const maxTotalChars = maxCharsPerLine * maxLines;
+
+  // Crop title if too long
+  const croppedTitle =
+    title.length > maxTotalChars
+      ? title.substring(0, maxTotalChars).trim()
+      : title;
+
+  const words = croppedTitle.split(" ");
+  const lines: string[] = [];
+  let currentLine = "";
+
+  for (const word of words) {
+    const testLine = currentLine ? `${currentLine} ${word}` : word;
+
+    if (testLine.length <= maxCharsPerLine) {
+      currentLine = testLine;
+    } else {
+      if (currentLine) {
+        lines.push(currentLine);
+        currentLine = word;
+      } else {
+        // Single word longer than max chars
+        lines.push(word.substring(0, maxCharsPerLine));
+        currentLine = "";
+      }
+    }
+
+    // Stop if we've reached max lines
+    if (lines.length >= maxLines) {
+      break;
+    }
+  }
+
+  // Add remaining text if within line limit
+  if (currentLine && lines.length < maxLines) {
+    lines.push(currentLine);
+  }
+
+  return lines;
+};
+
 export const svgTypes = {
-  default: `
+  default: (title: string, subtitle: string) => {
+    const titleLines = splitTitle(title);
+    const subtitleLines = splitTitle(subtitle);
+
+    return `
     <svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect width="1200" height="630" fill="#101010" />
         <path
@@ -12,14 +61,21 @@ export const svgTypes = {
             font-family="Sora"
             font-weight="400"
             font-style="normal"
-            font-size="20.28"
+            font-size="17"
             letter-spacing="-0.6084"
             text-anchor="start"
             dominant-baseline="middle">
-            {{subtitle}}
+            ${subtitleLines
+              .map(
+                (line, index) =>
+                  `<tspan x="172" dy="${
+                    index === 0 ? "0" : "1.2em"
+                  }">${line}</tspan>`
+              )
+              .join("\n            ")}
         </text>
 
-        <text x="172" y="312.63" fill="#EDE8E8"
+        <text x="172" y="328" fill="#EDE8E8"
             width="823.2"
             height="146"
             font-family="Sora"
@@ -28,9 +84,15 @@ export const svgTypes = {
             font-size="72.52"
             letter-spacing="-2.1756"
             text-anchor="start"
-            dominant-baseline="middle"
-            >
-            {{title}}
+            dominant-baseline="middle">
+            ${titleLines
+              .map(
+                (line, index) =>
+                  `<tspan x="172" dy="${
+                    index === 0 ? "0" : "1em"
+                  }">${line}</tspan>`
+              )
+              .join("\n            ")}
         </text>
 
         <path fill-rule="evenodd" clip-rule="evenodd"
@@ -51,5 +113,6 @@ export const svgTypes = {
             d="M1030.77 231.026L1007.38 213.881V196.273L1030.77 179.129L1040 195.501L1021.23 203.224V206.931L1040 214.499L1030.77 231.026ZM1008.77 166L1005.69 194.883L990.462 203.687L964 191.949L973.538 175.885L989.538 188.242L992.769 186.388L990 166.309L1008.77 166ZM964 218.051L990.462 206.313L1005.69 215.117L1008.77 244L990 243.846L992.769 223.766L989.538 221.913L973.692 234.269L964 218.051Z"
             fill="#FE601F" />
     </svg>
-    `,
+    `;
+  },
 };
