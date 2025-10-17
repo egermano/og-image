@@ -23,15 +23,13 @@ app.get("/", async (c) => {
     .then((res) => res.arrayBuffer())
     .then((buffer) => new Uint8Array(buffer));
 
-  if (!wasmIsInitialized) { 
+  if (!wasmIsInitialized) {
     await wasmInitializer();
   }
 
   const svg = svgTypes.default
     .replace("{{title}}", title)
     .replace("{{subtitle}}", subtitle);
-
-  console.log(svg);
 
   const image = new Resvg(svg, {
     fitTo: {
@@ -45,8 +43,6 @@ app.get("/", async (c) => {
     .render()
     .asPng();
 
-  console.log("image");
-
   // Convert to proper Uint8Array<ArrayBuffer> type
   const pngBuffer = new Uint8Array(image);
 
@@ -56,6 +52,3 @@ app.get("/", async (c) => {
 });
 
 app.fire();
-
-
-
