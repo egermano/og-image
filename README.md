@@ -74,7 +74,7 @@ GET /?title=My Awesome Post&subtitle=Blog Post&type=dotGrid
 **Full example URL:**
 
 ```
-https://your-domain.com/?title=How%20functions%20delivers%20value%20faster%20with%20Azion&subtitle=A%20comprehensive%20guide&type=dotGrid
+https://8v0frmzqj20.map.azionedge.net/?title=How%20functions%20delivers%20value%20faster%20with%20Azion&subtitle=A%20comprehensive%20guide&type=dotGrid
 ```
 
 ### Response
