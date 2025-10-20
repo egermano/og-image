@@ -1,6 +1,6 @@
 # OG Image Generator
 
-A dynamic Open Graph image generator built with TypeScript that runs on the edge. Generate custom social media preview images on-the-fly with customizable titles, subtitles, and templates.
+A dynamic Open Graph image generator built with TypeScript that runs on [Azion](https://azion.com/) Functions. Generate custom social media preview images on-the-fly with customizable titles, subtitles, and templates.
 
 ## Usage Information
 
@@ -73,7 +73,7 @@ GET /?title=My Awesome Post&subtitle=Blog Post&type=dotGrid
 
 **Full example URL:**
 
-```http
+```
 https://your-domain.com/?title=How%20functions%20delivers%20value%20faster%20with%20Azion&subtitle=A%20comprehensive%20guide&type=dotGrid
 ```
 
