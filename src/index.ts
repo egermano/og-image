@@ -1,4 +1,4 @@
-import { svgTypes } from "@/og-svg";
+import { SvgType, svgTypes } from "@/og-svg";
 import { initWasm, Resvg } from "@resvg/resvg-wasm";
 import { Hono } from "hono";
 const app = new Hono();
@@ -16,6 +16,7 @@ const wasmInitializer = async () => {
 app.get("/", async (c) => {
   const title = c.req.query("title") || "Hello, world!";
   const subtitle = c.req.query("subtitle") || "";
+  const type: SvgType = (c.req.query("type") || "default") as SvgType;
 
   const soraBuffer = await fetch(
     "https://fonts.azion.com/sora/Sora-VariableFont_wght.ttf"
@@ -27,7 +28,7 @@ app.get("/", async (c) => {
     await wasmInitializer();
   }
 
-  const svg = svgTypes.default(title, subtitle);
+  const svg = svgTypes[type](title, subtitle);
 
   const image = new Resvg(svg, {
     fitTo: {
