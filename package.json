@@ -9,8 +9,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "Bruno Andrade<bruno.andrade@azion.com>",
-  "license": "ISC",
+  "author": "Bruno Germano <bruno@egerman.com>",
+  "license": "MIT",
   "dependencies": {
     "@resvg/resvg-wasm": "^2.6.2",
     "azion": "latest",
